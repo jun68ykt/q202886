@@ -19,6 +19,16 @@ $(function() {
     numberOfMonths: 1,
   });
 
+  // moment 日本語設定
+  moment.locale("ja", {
+    weekdaysShort: ["日", "月", "火", "水", "木", "金", "土"]
+  });
+
+  // date から n 日後の日付を文字列にして、当該要素の text として設定
+  $.fn.dateText = function(date, n) {
+    return this.text(moment(date).add(n, 'days').format('YYYY/MM/DD (ddd)'));
+  }
+
   $('#start_date').datepicker({
     minDate: 0,
     onSelect: showDays
@@ -36,5 +46,19 @@ $(function() {
     var days = (end - start) / 1000 / 60 / 60 / 24;
     days++;
     $('#diff_day').val(days); //開始日～終了日までの日数
+
+    $('.output')  // .output の内容を、開始日から終了日までのリストで置き換える。
+      .empty()
+      .append(daysList(start, days));
+  }
+
+  // dateを含めてnum日の日付のリストになる <ol> を返す。
+  function daysList(date, num) {
+    if (num <= 0) return;
+
+    return [...Array(num)].reduce(
+      (list, _, i) => list.append($('<li>').dateText(date, i)),
+      $('<ol>')
+    );
   }
 });
