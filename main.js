@@ -47,9 +47,7 @@ $(function() {
     days++;
     $('#diff_day').val(days); //開始日～終了日までの日数
 
-    $('.output')  // .output の内容を、開始日から終了日までのリストで置き換える。
-      .empty()
-      .append(daysList(start, days));
+    $('.output').html(daysList(start, days)); // .outputの内容を開始日から終了日までのリストで置き換え
   }
 
   // dateを含めてnum日の日付のリストになる <ol> を返す。
