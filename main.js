@@ -43,8 +43,7 @@ $(function() {
     var start = $('#start_date').datepicker('getDate');
     var end = $('#end_date').datepicker('getDate');
     if (!start || !end) return;
-    var days = (end - start) / 1000 / 60 / 60 / 24;
-    days++;
+    var days = moment(end).diff(moment(start), 'days')
     $('#diff_day').val(days); //開始日～終了日までの日数
 
     $('.output').html(daysList(start, days)); // .outputの内容を開始日から終了日までのリストで置き換え
